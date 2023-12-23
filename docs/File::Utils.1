@@ -16,6 +16,8 @@ SUBTITLE [#subtitle]
 COPYRIGHT [#copyright]
 .IP \(bu 2m
 Introduction [#introduction]
+.IP \(bu 2m
+CorruptFile [#corruptfile]
 .SH "NAME"
 File::Utils 
 .SH "AUTHOR"
@@ -35,3 +37,19 @@ Top of Document [#table-of-contents]
 A \fBRaku\fR module for converting various File system properties to symbolic form\&. For instance \fBsymbolic\-perms(…)\fR will give you the \fB\&.rwxr\-xr\-x\fR type representation of the file type and permissions like used by \fBls\fR and \fBexa\fR\&. And \fBformat\-bytes(…)\fR will convert the file size from bytes \fBB\fR to \fBTiB\fR, \fBGiB\fR etc\&.
 
 Top of Document [#table-of-contents]
+.SS CorruptFile
+
+\fBCorruptFile\fR is an exception class to be used if a corrupt file is encountered\&. 
+
+.RS 4m
+.EX
+class CorruptFile is Exception is export {
+    has Str:D $\&.msg = 'Error: File is Corrupt';
+    method message( \-\-> Str:D) {
+        $!msg;
+    }
+}
+
+
+.EE
+.RE

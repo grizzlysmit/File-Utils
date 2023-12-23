@@ -582,6 +582,7 @@ footer {
  <tr class="toc-level-1"><td class="toc-text"><a href="#Name">Name</a></td></tr>
  <tr class="toc-level-1"><td class="toc-text"><a href="#Copyright">Copyright</a></td></tr>
  <tr class="toc-level-1"><td class="toc-text"><a href="#Introduction">Introduction</a></td></tr>
+ <tr class="toc-level-3"><td class="toc-text"><a href="#CorruptFile">CorruptFile</a></td></tr>
 </table></div>
 </nav><div id="File::Utils_0"></div><div class="subtitle"><p>A Raku module for converting various File system properties to symbolic form.</p></div><div class="pod-body"><section name="___top"><h1 id="File::Utils"><a href="#___top" class="u" title="go to top of document">File::Utils</a></h1>
 <h2 id="Table_of_Contents"><a href="#___top" class="u" title="go to top of document">Table of Contents</a></h2>
@@ -593,6 +594,7 @@ footer {
 <li><p><a href="#subtitle">SUBTITLE</a></p></li>
 <li><p><a href="#copyright">COPYRIGHT</a></p></li>
 <li><p><a href="#introduction">Introduction</a></p></li>
+<li><p><a href="#corruptfile">CorruptFile</a></p></li>
 </ul>
 <section>
 <h1 id="Name"><a href="#___top" class="u" title="go to top of document">NAME</a></h1>
@@ -603,8 +605,16 @@ footer {
 <p>LGPL V3.0+ <a href="https://github.com/grizzlysmit/File-Utils/blob/main/LICENSE">LICENSE</a></p>
 </section>
 <p><a href="#table-of-contents">Top of Document</a></p><h1 id="Introduction"><a href="#File::Utils_0" class="u" title="go to top of document">Introduction</a></h1>
-<p>A <strong>Raku</strong> module for converting various File system properties to symbolic form. For instance <strong><code>symbolic-perms(…)</code></strong> will give you the <strong>.rwxr-xr-x</strong> type representation of the file type and permissions like used by <strong><code>ls</code></strong> and <strong><code>exa</code></strong>. And <strong><code>format-bytes(…)</code></strong> will convert the file size from bytes <strong>B</strong> to <strong>TiB</strong>, <strong>GiB</strong> etc.</p><p><a href="#table-of-contents">Top of Document</a></p></section>		</div>
-</div><footer><div>Rendered from <span class="path">UNNAMED</span></div><div>at <span class="time">2023-12-23T20:16:13Z</span></div></footer>
+<p>A <strong>Raku</strong> module for converting various File system properties to symbolic form. For instance <strong><code>symbolic-perms(…)</code></strong> will give you the <strong>.rwxr-xr-x</strong> type representation of the file type and permissions like used by <strong><code>ls</code></strong> and <strong><code>exa</code></strong>. And <strong><code>format-bytes(…)</code></strong> will convert the file size from bytes <strong>B</strong> to <strong>TiB</strong>, <strong>GiB</strong> etc.</p><p><a href="#table-of-contents">Top of Document</a></p></section><section name="pod"><h3 id="CorruptFile"><a href="#File::Utils_0" class="u" title="go to top of document">CorruptFile</a></h3>
+<p><strong><code>CorruptFile</code></strong> is an exception class to be used if a corrupt file is encountered. </p><pre class="pod-block-code">class CorruptFile is Exception is export {
+    has Str:D $.msg = 'Error: File is Corrupt';
+    method message( --&gt; Str:D) {
+        $!msg;
+    }
+}
+
+</pre></section>		</div>
+</div><footer><div>Rendered from <span class="path">UNNAMED</span></div><div>at <span class="time">2023-12-23T21:06:20Z</span></div></footer>
 	</body>
 </html>
 

@@ -4,5 +4,6 @@ use Test;
 
 use File::Utils;
 
+is(symbolic-perms(), rx//);
 
 done-testing;

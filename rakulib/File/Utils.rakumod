@@ -17,6 +17,7 @@ Table of Contents
 =item1 L<SUBTITLE|#subtitle>
 =item1 L<COPYRIGHT|#copyright>
 =item1 L<Introduction|#introduction>
+=item1 L<CorruptFile|#corruptfile>
 
 =NAME File::Utils 
 =AUTHOR Francis Grizzly Smit (grizzly@smit.id.au)
@@ -42,6 +43,25 @@ L<Top of Document|#table-of-contents>
 
 use Terminal::ANSI::OO :t;
 use Gzz::Text::Utils;
+
+=begin pod
+
+=head3 CorruptFile
+
+B<C<CorruptFile>> is an exception class to be used if a corrupt file is encountered. 
+
+=begin code :lang<raku>
+
+class CorruptFile is Exception is export {
+    has Str:D $.msg = 'Error: File is Corrupt';
+    method message( --> Str:D) {
+        $!msg;
+    }
+}
+
+=end code
+
+=end pod
 
 class CorruptFile is Exception is export {
     has Str:D $.msg = 'Error: File is Corrupt';
