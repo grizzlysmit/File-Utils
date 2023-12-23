@@ -61,6 +61,8 @@ class CorruptFile is Exception is export {
 
 =end code
 
+L<Top of Document|#table-of-contents>
+
 =end pod
 
 class CorruptFile is Exception is export {

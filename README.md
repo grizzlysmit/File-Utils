@@ -72,3 +72,5 @@ class CorruptFile is Exception is export {
 }
 ```
 
+[Top of Document](#table-of-contents)
+
