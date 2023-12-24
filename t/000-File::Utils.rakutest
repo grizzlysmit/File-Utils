@@ -4,6 +4,18 @@ use Test;
 
 use File::Utils;
 
-is(symbolic-perms(), rx//);
+plan 10;
+
+cmp-ok(symbolic-perms('/etc/passwd'.IO), '~~', rx/^ <[\.dbcl]> [ <[-r]> <[-w]> <[-xs]> ] ** 3 $ /, 'symbolic-perms matched pattern');
+cmp-ok(symbolic-perms('.'.IO), '~~', rx/^ <[\.dbcl]> [ <[-r]> <[-w]> <[-xs]> ] ** 3 $ /, 'symbolic-perms matched pattern');
+
+is(format-bytes(1024), '1.0KiB', 'formating bytes correctyly');
+is(format-bytes(2 ** 20), '1.0MiB', 'formating bytes correctyly');
+is(format-bytes(2 ** 30), '1.0GiB', 'formating bytes correctyly');
+is(format-bytes(2 ** 40), '1.0TiB', 'formating bytes correctyly');
+is(format-bytes(2 ** 50), '1.0PiB', 'formating bytes correctyly');
+is(format-bytes(2 ** 60), '1.0EiB', 'formating bytes correctyly');
+is(uid2username(+$*USER), ~$*USER, 'gid2groupname works');
+is(gid2groupname(+$*USER), ~$*USER, 'gid2groupname works');
 
 done-testing;

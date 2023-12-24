@@ -1,4 +1,4 @@
-unit module File::Utils:ver<0.1.0>:auth<Francis Grizzly Smit (grizzlysmit@smit.id.au)>;
+unit module File::Utils:ver<0.1.1>:auth<Francis Grizzly Smit (grizzlysmit@smit.id.au)>;
 
 =begin pod
 
@@ -18,10 +18,14 @@ Table of Contents
 =item1 L<COPYRIGHT|#copyright>
 =item1 L<Introduction|#introduction>
 =item1 L<CorruptFile|#corruptfile>
+=item1 L<symbolic-perms(…)|#symbolic-perms>
+=item1 L<format-bytes(…)|#format-bytes>
+=item1 L<uid2username(…)|#uid2username>
+=item1 L<gid2groupname(…)|#gid2groupname>
 
 =NAME File::Utils 
 =AUTHOR Francis Grizzly Smit (grizzly@smit.id.au)
-=VERSION 0.1.3
+=VERSION 0.1.1
 =TITLE File::Utils
 =SUBTITLE A Raku module for converting various File system properties to symbolic form.
 
@@ -72,6 +76,21 @@ class CorruptFile is Exception is export {
     }
 }
 
+=begin pod
+
+=head3 symbolic-perms(…)
+
+A function for producing the B<.rwxrwxrwx> form of a files type and permissions like that used by B<ls> and B<exa>.
+It also supports colourising and syntax highlighting of the perms.
+
+=begin code :lang<raku>
+
+sub symbolic-perms(IO::Path $path, Bool:D :$colour is copy = False, Bool:D :$syntax = False) is export
+
+=end code
+
+=end pod
+
 sub symbolic-perms(IO::Path $path, Bool:D :$colour is copy = False, Bool:D :$syntax = False) is export {
     my Str:D $perms = '';
     if $syntax {
@@ -110,6 +129,22 @@ sub symbolic-perms(IO::Path $path, Bool:D :$colour is copy = False, Bool:D :$syn
     return $perms;
 } # sub symbolic-perms(IO::Path $path) #
 
+=begin pod
+
+=head3 format-bytes(…)
+
+Format a number in bytes into B<KiB>, B<MiB>, B<GiB>, B<TiB>, ……
+also  appends the B<GiB>, B<TiB> designator. 
+
+=begin code :lang<raku>
+
+sub format-bytes(Int:D $bytes, Int:D :$width = 5,
+                 Int:D :$precision = 1 --> Str:D) is export 
+
+=end code
+
+=end pod
+
 sub format-bytes(Int:D $bytes, Int:D :$width = 5, Int:D :$precision = 1 --> Str:D) is export {
     if $bytes >= 2 ** 100 {
         return Sprintf "%-*.*f%s", $width, $precision, ($bytes.Num / (2 ** 100).Num), 'QiB';
@@ -136,6 +171,22 @@ sub format-bytes(Int:D $bytes, Int:D :$width = 5, Int:D :$precision = 1 --> Str:
     }
 } # sub format-bytes(Int:D $bytes --> Str:D) #
 
+=begin pod
+
+=head3 uid2username(…)
+
+A function to convert a numeric B<uid> into a B<username>, will only work on a typical 
+B<*nix> file system requires B</etc/passwd> to exist, and be readable. Will fail if
+these conditions are not true.
+
+=begin code :lang<raku>
+
+sub uid2username(UInt:D $uid --> Str:D) is export
+
+=end code
+
+=end pod
+
 sub uid2username(UInt:D $uid --> Str:D) is export {
     my @username = "/etc/passwd".IO.slurp().split("\n").grep( { rx/ ^ \w+ ':' <-[:]>+ ':' $uid ':' .* $ / }).map(  {
         ((rx/ ^ ( \w+ ) ':' <-[:]>+ ':' $uid ':' .* $ /) ?? ~$0 !! ~$uid)
@@ -143,6 +194,22 @@ sub uid2username(UInt:D $uid --> Str:D) is export {
     CorruptFile.new(:msg("uid: $uid not found")).throw unless @username.elems == 1;
     return @username[0];
 } # sub uid2username(UInt:D $uid --> Str:D) is export #
+
+=begin pod
+
+=head3 gid2groupname(…)
+
+A function to convert a numeric B<gid> into a B<groupname>, will only work on a typical 
+B<*nix> file system requires B</etc/group> to exist, and be readable. Will fail if
+these conditions are not true.
+
+=begin code :lang<raku>
+
+sub gid2groupname(UInt:D $gid --> Str:D) is export
+
+=end code
+
+=end pod
 
 sub gid2groupname(UInt:D $gid --> Str:D) is export {
     my @groupname = "/etc/group".IO.slurp().split("\n").grep( { rx/ ^ \w+ ':' <-[:]>+ ':' $gid ':' $ / }).map(  {

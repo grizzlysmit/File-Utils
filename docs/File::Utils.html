@@ -24,7 +24,7 @@ Av8AAAD/AAAAAAAAAEAAAAAAAAAAGQAAAP/RAACR/35+/wAAAP8A+wL/AAAA2gAAAGX/AADa/35+
 AAAAZQAAAP8AAAD/AAAAAAAAAAAAAABlAAAA/4WFhQEAAAD/AAAAQAAAAAAAAAD/AAAA2gAAAGUA
 AAAAj/kAAAZgAAADgAAAgAEAAOAHAADgBwAAwAMAAIABAACAAQAAAAEAAAAAAAAAAAAAAAAAAAPA
 AACH4QAAzrMAAA==" rel="icon" type="image/x-icon" /><meta name="author" value="Francis Grizzly Smit (grizzly@smit.id.au)" />
-<meta name="version" value="0.1.3" />
+<meta name="version" value="0.1.1" />
 <style>.comment {
   color: #666; }
 
@@ -583,6 +583,10 @@ footer {
  <tr class="toc-level-1"><td class="toc-text"><a href="#Copyright">Copyright</a></td></tr>
  <tr class="toc-level-1"><td class="toc-text"><a href="#Introduction">Introduction</a></td></tr>
  <tr class="toc-level-3"><td class="toc-text"><a href="#CorruptFile">CorruptFile</a></td></tr>
+ <tr class="toc-level-3"><td class="toc-text"><a href="#symbolic-perms(…)">symbolic-perms(…)</a></td></tr>
+ <tr class="toc-level-3"><td class="toc-text"><a href="#format-bytes(…)">format-bytes(…)</a></td></tr>
+ <tr class="toc-level-3"><td class="toc-text"><a href="#uid2username(…)">uid2username(…)</a></td></tr>
+ <tr class="toc-level-3"><td class="toc-text"><a href="#gid2groupname(…)">gid2groupname(…)</a></td></tr>
 </table></div>
 </nav><div id="File::Utils_0"></div><div class="subtitle"><p>A Raku module for converting various File system properties to symbolic form.</p></div><div class="pod-body"><section name="___top"><h1 id="File::Utils"><a href="#___top" class="u" title="go to top of document">File::Utils</a></h1>
 <h2 id="Table_of_Contents"><a href="#___top" class="u" title="go to top of document">Table of Contents</a></h2>
@@ -595,6 +599,10 @@ footer {
 <li><p><a href="#copyright">COPYRIGHT</a></p></li>
 <li><p><a href="#introduction">Introduction</a></p></li>
 <li><p><a href="#corruptfile">CorruptFile</a></p></li>
+<li><p><a href="#symbolic-perms">symbolic-perms(…)</a></p></li>
+<li><p><a href="#format-bytes">format-bytes(…)</a></p></li>
+<li><p><a href="#uid2username">uid2username(…)</a></p></li>
+<li><p><a href="#gid2groupname">gid2groupname(…)</a></p></li>
 </ul>
 <section>
 <h1 id="Name"><a href="#___top" class="u" title="go to top of document">NAME</a></h1>
@@ -613,8 +621,21 @@ footer {
     }
 }
 
-</pre><p><a href="#table-of-contents">Top of Document</a></p></section>		</div>
-</div><footer><div>Rendered from <span class="path">UNNAMED</span></div><div>at <span class="time">2023-12-23T21:07:51Z</span></div></footer>
+</pre><p><a href="#table-of-contents">Top of Document</a></p></section><section name="pod"><h3 id="symbolic-perms(…)"><a href="#File::Utils_0" class="u" title="go to top of document">symbolic-perms(…)</a></h3>
+<p>A function for producing the <strong>.rwxrwxrwx</strong> form of a files type and permissions like that used by <strong>ls</strong> and <strong>exa</strong>. It also supports colourising and syntax highlighting of the perms.</p><pre class="pod-block-code">sub symbolic-perms(IO::Path $path, Bool:D :$colour is copy = False, Bool:D :$syntax = False) is export
+
+</pre></section><section name="pod"><h3 id="format-bytes(…)"><a href="#File::Utils_0" class="u" title="go to top of document">format-bytes(…)</a></h3>
+<p>Format a number in bytes into <strong>KiB</strong>, <strong>MiB</strong>, <strong>GiB</strong>, <strong>TiB</strong>, …… also appends the <strong>GiB</strong>, <strong>TiB</strong> designator. </p><pre class="pod-block-code">sub format-bytes(Int:D $bytes, Int:D :$width = 5,
+                 Int:D :$precision = 1 --&gt; Str:D) is export 
+
+</pre></section><section name="pod"><h3 id="uid2username(…)"><a href="#File::Utils_0" class="u" title="go to top of document">uid2username(…)</a></h3>
+<p>A function to convert a numeric <strong>uid</strong> into a <strong>username</strong>, will only work on a typical <strong>*nix</strong> file system requires <strong>/etc/passwd</strong> to exist, and be readable. Will fail if these conditions are not true.</p><pre class="pod-block-code">sub uid2username(UInt:D $uid --&gt; Str:D) is export
+
+</pre></section><section name="pod"><h3 id="gid2groupname(…)"><a href="#File::Utils_0" class="u" title="go to top of document">gid2groupname(…)</a></h3>
+<p>A function to convert a numeric <strong>gid</strong> into a <strong>groupname</strong>, will only work on a typical <strong>*nix</strong> file system requires <strong>/etc/group</strong> to exist, and be readable. Will fail if these conditions are not true.</p><pre class="pod-block-code">sub gid2groupname(UInt:D $gid --&gt; Str:D) is export
+
+</pre></section>		</div>
+</div><footer><div>Rendered from <span class="path">UNNAMED</span></div><div>at <span class="time">2023-12-24T20:37:57Z</span></div></footer>
 	</body>
 </html>
 

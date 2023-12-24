@@ -1,5 +1,5 @@
 .pc
-.TH Utils.rakumod 1 2023-12-24
+.TH Utils.rakumod 1 2023-12-25
 .SH File::Utils
 .SS Table of Contents
 .IP \(bu 2m
@@ -18,12 +18,20 @@ COPYRIGHT [#copyright]
 Introduction [#introduction]
 .IP \(bu 2m
 CorruptFile [#corruptfile]
+.IP \(bu 2m
+symbolic\-perms(…) [#symbolic-perms]
+.IP \(bu 2m
+format\-bytes(…) [#format-bytes]
+.IP \(bu 2m
+uid2username(…) [#uid2username]
+.IP \(bu 2m
+gid2groupname(…) [#gid2groupname]
 .SH "NAME"
 File::Utils 
 .SH "AUTHOR"
 Francis Grizzly Smit (grizzly@smit\&.id\&.au)
 .SH "VERSION"
-0\&.1\&.3
+0\&.1\&.1
 .SH "TITLE"
 File::Utils
 .SH "SUBTITLE"
@@ -55,3 +63,48 @@ class CorruptFile is Exception is export {
 .RE
 .P
 Top of Document [#table-of-contents]
+.SS symbolic\-perms(…)
+
+A function for producing the \fB\&.rwxrwxrwx\fR form of a files type and permissions like that used by \fBls\fR and \fBexa\fR\&. It also supports colourising and syntax highlighting of the perms\&.
+
+.RS 4m
+.EX
+sub symbolic\-perms(IO::Path $path, Bool:D :$colour is copy = False, Bool:D :$syntax = False) is export
+
+
+.EE
+.RE
+.SS format\-bytes(…)
+
+Format a number in bytes into \fBKiB\fR, \fBMiB\fR, \fBGiB\fR, \fBTiB\fR, …… also appends the \fBGiB\fR, \fBTiB\fR designator\&. 
+
+.RS 4m
+.EX
+sub format\-bytes(Int:D $bytes, Int:D :$width = 5,
+                 Int:D :$precision = 1 \-\-> Str:D) is export 
+
+
+.EE
+.RE
+.SS uid2username(…)
+
+A function to convert a numeric \fBuid\fR into a \fBusername\fR, will only work on a typical \fB*nix\fR file system requires \fB/etc/passwd\fR to exist, and be readable\&. Will fail if these conditions are not true\&.
+
+.RS 4m
+.EX
+sub uid2username(UInt:D $uid \-\-> Str:D) is export
+
+
+.EE
+.RE
+.SS gid2groupname(…)
+
+A function to convert a numeric \fBgid\fR into a \fBgroupname\fR, will only work on a typical \fB*nix\fR file system requires \fB/etc/group\fR to exist, and be readable\&. Will fail if these conditions are not true\&.
+
+.RS 4m
+.EX
+sub gid2groupname(UInt:D $gid \-\-> Str:D) is export
+
+
+.EE
+.RE
