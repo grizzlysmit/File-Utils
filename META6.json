@@ -20,7 +20,7 @@
         "bugtracker": "https://github.com/grizzlysmit/File-Utils/issues"
     },
     "auth": "zef:grizzlysmit",
-    "version" : "0.1.1",
+    "version" : "0.1.2",
     "tags" : [ "text", "formatting", "formatted", "format", "symbolic", "uid", "gid", "username", "groupname", "permissions", "perms", "KiB", "MiB", "GiB", "TiB", "ANSI", "highlighted" ],
   "test-depends": [
   ]

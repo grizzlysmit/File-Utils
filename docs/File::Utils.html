@@ -24,7 +24,7 @@ Av8AAAD/AAAAAAAAAEAAAAAAAAAAGQAAAP/RAACR/35+/wAAAP8A+wL/AAAA2gAAAGX/AADa/35+
 AAAAZQAAAP8AAAD/AAAAAAAAAAAAAABlAAAA/4WFhQEAAAD/AAAAQAAAAAAAAAD/AAAA2gAAAGUA
 AAAAj/kAAAZgAAADgAAAgAEAAOAHAADgBwAAwAMAAIABAACAAQAAAAEAAAAAAAAAAAAAAAAAAAPA
 AACH4QAAzrMAAA==" rel="icon" type="image/x-icon" /><meta name="author" value="Francis Grizzly Smit (grizzly@smit.id.au)" />
-<meta name="version" value="0.1.1" />
+<meta name="version" value="0.1.2" />
 <style>.comment {
   color: #666; }
 
@@ -622,9 +622,29 @@ footer {
 }
 
 </pre><p><a href="#table-of-contents">Top of Document</a></p></section><section name="pod"><h3 id="symbolic-perms(…)"><a href="#File::Utils_0" class="u" title="go to top of document">symbolic-perms(…)</a></h3>
-<p>A function for producing the <strong>.rwxrwxrwx</strong> form of a files type and permissions like that used by <strong>ls</strong> and <strong>exa</strong>. It also supports colourising and syntax highlighting of the perms.</p><pre class="pod-block-code">sub symbolic-perms(IO::Path $path, Bool:D :$colour is copy = False, Bool:D :$syntax = False) is export
+<p>A function for producing the <strong>.rwxrwxrwx</strong> form of a files type and permissions like that used by <strong>ls</strong> and <strong>exa</strong>. It also supports colourising and syntax highlighting of the perms.</p><pre class="pod-block-code">sub symbolic-perms(IO::Path $path,
+                   Bool:D :$colour is copy = False,
+                   Bool:D :$syntax = False, 
+                   Bool:D :$highlighted = False, 
+                   Bool:D :$cond = False, 
+                   Str:D :$highlight-fg-colour = t.color(255, 0, 0), 
+                   Str:D :$fg-colour0 = t.color(255, 0, 0), 
+                   Str:D :$fg-colour1 = t.color(255, 0, 0) --&gt; Str:D) is export {
 
-</pre></section><section name="pod"><h3 id="format-bytes(…)"><a href="#File::Utils_0" class="u" title="go to top of document">format-bytes(…)</a></h3>
+</pre><ul>
+<li><p>Where</p></li>
+<ul>
+<li><p><strong><code>$path</code></strong> Is the path of the file/directory to describe the perms for.</p></li>
+<li><p><strong><code>$colour</code></strong> If True colour the perms.</p></li>
+<li><p><strong><code>$syntax</code></strong> If true syntax highlight the perms.</p></li>
+<li><p><strong><code>$highlighted</code></strong> If true set the text colour to <strong><code>$highlight-fg-colour</code></strong>.</p></li>
+<li><p><strong><code>$cond</code></strong> If not highlighted and True set the text colour to <strong><code>$fg-color0</code></strong> else set text to <strong><code>$fg-color1</code></strong>.</p></li>
+<li><p><strong><code>$highlight-fg-colour</code></strong> Colour to set the text to if <strong><code>$highlighted</code></strong>.</p></li>
+<li><p><strong><code>$fg-colour0</code></strong> Colour to set the text to if not <strong><code>$highlighted</code></strong> and <strong><code>$cond</code></strong>.</p></li>
+<li><p><strong><code>$fg-colour1</code></strong> Colour to set the text to if not <strong><code>$highlighted</code></strong> and not <strong><code>$cond</code></strong>.</p></li>
+</ul>
+</ul>
+<p><strong>NB: Only recognises directory, link and regular file just now.</strong></p></section><section name="pod"><h3 id="format-bytes(…)"><a href="#File::Utils_0" class="u" title="go to top of document">format-bytes(…)</a></h3>
 <p>Format a number in bytes into <strong>KiB</strong>, <strong>MiB</strong>, <strong>GiB</strong>, <strong>TiB</strong>, …… also appends the <strong>GiB</strong>, <strong>TiB</strong> designator. </p><pre class="pod-block-code">sub format-bytes(Int:D $bytes, Int:D :$width = 5,
                  Int:D :$precision = 1 --&gt; Str:D) is export 
 
@@ -635,7 +655,7 @@ footer {
 <p>A function to convert a numeric <strong>gid</strong> into a <strong>groupname</strong>, will only work on a typical <strong>*nix</strong> file system requires <strong>/etc/group</strong> to exist, and be readable. Will fail if these conditions are not true.</p><pre class="pod-block-code">sub gid2groupname(UInt:D $gid --&gt; Str:D) is export
 
 </pre></section>		</div>
-</div><footer><div>Rendered from <span class="path">UNNAMED</span></div><div>at <span class="time">2023-12-24T20:37:57Z</span></div></footer>
+</div><footer><div>Rendered from <span class="path">UNNAMED</span></div><div>at <span class="time">2024-01-01T08:46:06Z</span></div></footer>
 	</body>
 </html>
 

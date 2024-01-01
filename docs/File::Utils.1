@@ -1,5 +1,5 @@
 .pc
-.TH Utils.rakumod 1 2023-12-25
+.TH Utils.rakumod 1 2024-01-01
 .SH File::Utils
 .SS Table of Contents
 .IP \(bu 2m
@@ -31,7 +31,7 @@ File::Utils
 .SH "AUTHOR"
 Francis Grizzly Smit (grizzly@smit\&.id\&.au)
 .SH "VERSION"
-0\&.1\&.1
+0\&.1\&.2
 .SH "TITLE"
 File::Utils
 .SH "SUBTITLE"
@@ -69,11 +69,54 @@ A function for producing the \fB\&.rwxrwxrwx\fR form of a files type and permiss
 
 .RS 4m
 .EX
-sub symbolic\-perms(IO::Path $path, Bool:D :$colour is copy = False, Bool:D :$syntax = False) is export
+sub symbolic\-perms(IO::Path $path,
+                   Bool:D :$colour is copy = False,
+                   Bool:D :$syntax = False, 
+                   Bool:D :$highlighted = False, 
+                   Bool:D :$cond = False, 
+                   Str:D :$highlight\-fg\-colour = t\&.color(255, 0, 0), 
+                   Str:D :$fg\-colour0 = t\&.color(255, 0, 0), 
+                   Str:D :$fg\-colour1 = t\&.color(255, 0, 0) \-\-> Str:D) is export {
 
 
 .EE
 .RE
+.IP \(bu 2m
+Where
+.RS 2n
+.IP \(bu 2m
+\fB$path\fR Is the path of the file/directory to describe the perms for\&.
+.RE
+.RS 2n
+.IP \(bu 2m
+\fB$colour\fR If True colour the perms\&.
+.RE
+.RS 2n
+.IP \(bu 2m
+\fB$syntax\fR If true syntax highlight the perms\&.
+.RE
+.RS 2n
+.IP \(bu 2m
+\fB$highlighted\fR If true set the text colour to \fB$highlight\-fg\-colour\fR\&.
+.RE
+.RS 2n
+.IP \(bu 2m
+\fB$cond\fR If not highlighted and True set the text colour to \fB$fg\-color0\fR else set text to \fB$fg\-color1\fR\&.
+.RE
+.RS 2n
+.IP \(bu 2m
+\fB$highlight\-fg\-colour\fR Colour to set the text to if \fB$highlighted\fR\&.
+.RE
+.RS 2n
+.IP \(bu 2m
+\fB$fg\-colour0\fR Colour to set the text to if not \fB$highlighted\fR and \fB$cond\fR\&.
+.RE
+.RS 2n
+.IP \(bu 2m
+\fB$fg\-colour1\fR Colour to set the text to if not \fB$highlighted\fR and not \fB$cond\fR\&.
+.RE
+
+\fBNB: Only recognises directory, link and regular file just now\&.\fR
 .SS format\-bytes(…)
 
 Format a number in bytes into \fBKiB\fR, \fBMiB\fR, \fBGiB\fR, \fBTiB\fR, …… also appends the \fBGiB\fR, \fBTiB\fR designator\&. 

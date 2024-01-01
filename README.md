@@ -41,7 +41,7 @@ Francis Grizzly Smit (grizzly@smit.id.au)
 VERSION
 =======
 
-0.1.1
+0.1.2
 
 TITLE
 =====
@@ -87,8 +87,35 @@ class CorruptFile is Exception is export {
 A function for producing the **.rwxrwxrwx** form of a files type and permissions like that used by **ls** and **exa**. It also supports colourising and syntax highlighting of the perms.
 
 ```raku
-sub symbolic-perms(IO::Path $path, Bool:D :$colour is copy = False, Bool:D :$syntax = False) is export
+sub symbolic-perms(IO::Path $path,
+                   Bool:D :$colour is copy = False,
+                   Bool:D :$syntax = False, 
+                   Bool:D :$highlighted = False, 
+                   Bool:D :$cond = False, 
+                   Str:D :$highlight-fg-colour = t.color(255, 0, 0), 
+                   Str:D :$fg-colour0 = t.color(255, 0, 0), 
+                   Str:D :$fg-colour1 = t.color(255, 0, 0) --> Str:D) is export {
 ```
+
+  * Where
+
+    * **`$path`** Is the path of the file/directory to describe the perms for.
+
+    * **`$colour`** If True colour the perms.
+
+    * **`$syntax`** If true syntax highlight the perms.
+
+    * **`$highlighted`** If true set the text colour to **`$highlight-fg-colour`**.
+
+    * **`$cond`** If not highlighted and True set the text colour to **`$fg-color0`** else set text to **`$fg-color1`**.
+
+    * **`$highlight-fg-colour`** Colour to set the text to if **`$highlighted`**.
+
+    * **`$fg-colour0`** Colour to set the text to if not **`$highlighted`** and **`$cond`**.
+
+    * **`$fg-colour1`** Colour to set the text to if not **`$highlighted`** and not **`$cond`**.
+
+**NB: Only recognises directory, link and regular file just now.**
 
 ### format-bytes(…)
 

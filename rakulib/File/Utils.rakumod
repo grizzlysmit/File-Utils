@@ -1,4 +1,4 @@
-unit module File::Utils:ver<0.1.1>:auth<Francis Grizzly Smit (grizzlysmit@smit.id.au)>;
+unit module File::Utils:ver<0.1.2>:auth<Francis Grizzly Smit (grizzlysmit@smit.id.au)>;
 
 =begin pod
 
@@ -25,7 +25,7 @@ Table of Contents
 
 =NAME File::Utils 
 =AUTHOR Francis Grizzly Smit (grizzly@smit.id.au)
-=VERSION 0.1.1
+=VERSION 0.1.2
 =TITLE File::Utils
 =SUBTITLE A Raku module for converting various File system properties to symbolic form.
 
@@ -85,18 +85,50 @@ It also supports colourising and syntax highlighting of the perms.
 
 =begin code :lang<raku>
 
-sub symbolic-perms(IO::Path $path, Bool:D :$colour is copy = False, Bool:D :$syntax = False) is export
+sub symbolic-perms(IO::Path $path,
+                   Bool:D :$colour is copy = False,
+                   Bool:D :$syntax = False, 
+                   Bool:D :$highlighted = False, 
+                   Bool:D :$cond = False, 
+                   Str:D :$highlight-fg-colour = t.color(255, 0, 0), 
+                   Str:D :$fg-colour0 = t.color(255, 0, 0), 
+                   Str:D :$fg-colour1 = t.color(255, 0, 0) --> Str:D) is export {
 
 =end code
 
+=item1 Where
+=item2 B<C<$path>>                 Is the path of the file/directory to describe the perms for.
+=item2 B<C<$colour>>               If True  colour the perms.
+=item2 B<C<$syntax>>               If true syntax highlight the perms.
+=item2 B<C<$highlighted>>          If true set the text colour to B<C<$highlight-fg-colour>>.
+=item2 B<C<$cond>>                 If not highlighted and True set the text colour to B<C<$fg-color0>> else set text to B<C<$fg-color1>>.
+=item2 B<C<$highlight-fg-colour>>  Colour to set the text to if B<C<$highlighted>>.
+=item2 B<C<$fg-colour0>>           Colour to set the text to if not B<C<$highlighted>> and B<C<$cond>>.
+=item2 B<C<$fg-colour1>>           Colour to set the text to if not B<C<$highlighted>> and not B<C<$cond>>.
+
+B<NB: Only recognises directory, link and regular file just now.>
+
 =end pod
 
-sub symbolic-perms(IO::Path $path, Bool:D :$colour is copy = False, Bool:D :$syntax = False) is export {
+sub symbolic-perms(IO::Path $path,
+                   Bool:D :$colour is copy = False,
+                   Bool:D :$syntax = False, 
+                   Bool:D :$highlighted = False, 
+                   Bool:D :$cond = False, 
+                   Str:D :$highlight-fg-colour = t.color(255, 0, 0), 
+                   Str:D :$fg-colour0 = t.color(255, 0, 0), 
+                   Str:D :$fg-colour1 = t.color(255, 0, 0) --> Str:D) is export {
     my Str:D $perms = '';
     if $syntax {
         $perms ~= t.color(0, 0, 255);
     } elsif $colour {
-        $perms ~= t.color(255, 0, 0);
+        if $highlighted {
+            $perms ~= $highlight-fg-colour;
+        } elsif $cond {
+            $perms ~= $fg-colour0;
+        } else {
+            $perms ~= $fg-colour1;
+        }
     }
     if $path ~~ :l {
         $perms ~= 'l';
@@ -127,7 +159,10 @@ sub symbolic-perms(IO::Path $path, Bool:D :$colour is copy = False, Bool:D :$syn
         } # for qw[r w x] -> $flag #
     } # for qw[user group other] -> $groupping #
     return $perms;
-} # sub symbolic-perms(IO::Path $path) #
+} #`««« sub symbolic-perms(IO::Path $path,
+                   Bool:D :$colour is copy = False,
+                   Bool:D :$syntax = False, 
+                   Str:D :$fg-colour = t.color(255, 0, 0) --> Str:D) is export »»»
 
 =begin pod
 
